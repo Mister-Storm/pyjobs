@@ -153,3 +153,28 @@ def download_cv(id: UUID):
 @router.put("/candidates/{id}/cv")
 def upload_cv(id: UUID):
     pass
+
+
+@router.get("/recruiters")
+def get_recruinters():
+    pass
+
+
+@router.post("/recruiters", status_code=status.HTTP_201_CREATED)
+def register_recruiter():
+    pass
+
+
+@router.get("/recruiters/{id}")
+def get_recruiter(id: UUID):
+    pass
+
+
+@router.put("/recruiters/{id}")
+def update_recruiter(id: UUID):
+    pass
+
+
+@router.delete("/recruiters/{id}", status_code=status.HTTP_204_NO_CONTENT)
+def delete_recruiter(id: UUID):
+    pass
