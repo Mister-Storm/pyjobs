@@ -7,6 +7,14 @@ from fastapi import APIRouter, Query, Depends
 from pydantic import BaseModel
 from starlette import status
 
+from pyjobs.web.schemas import (
+    JobsSortByEnum,
+    ContractTypeEnum,
+    CandidateStatusEnum,
+    ListSkills,
+    ListLocations,
+)
+
 router = APIRouter()
 
 
@@ -21,22 +29,6 @@ class Pagination(BaseModel):
     order: SortEnum
 
 
-class CandidateStatusEnum(Enum):
-    ACTIVELY_LOOKING = "activelyLooking"
-    NOT_LOOKING = "notLooking"
-    NOT_LOOKING_BUT_INTERESTED = "notLookingButInterested"
-
-
-class JobsSortByEnum(Enum):
-    DATE_POSTED = "datePosted"
-    RATE = "rate"
-
-
-class ContractTypeEnum(Enum):
-    PERMANENT = "permanent"
-    CONTRACT = "contract"
-
-
 def pagination_params(
     page: int = Query(ge=1, required=False, default=1),
     perPage: int = Query(ge=1, le=100, required=False, default=1),
@@ -45,12 +37,12 @@ def pagination_params(
     return Pagination(perPage=perPage, page=page, order=order.value)
 
 
-@router.get("/skills")
+@router.get("/skills", response_model=ListSkills)
 def list_skills(pagination: Annotated[Pagination, Depends(pagination_params)]):
     pass
 
 
-@router.get("/locations")
+@router.get("/locations", response_model=ListLocations)
 def list_locations(pagination: Annotated[Pagination, Depends(pagination_params)]):
     pass
 
